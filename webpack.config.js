@@ -1,15 +1,20 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
-  mode: 'production',
-
+  mode: 'none',
+  entry: { app: './src/index.tsx' },
+  output: {
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, 'dist'),
+  },
   // Enable sourcemaps for debugging webpack's output.
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV == 'development' && 'source-map',
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
 
   module: {
@@ -31,7 +36,10 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+  ],
 
   // When importing a module whose path matches one of the following, just
   // assume a corresponding global variable exists and use that instead.
@@ -42,12 +50,30 @@ module.exports = {
     'react-dom': 'ReactDOM',
   },
   devServer: {
-    // contentBase: path.join(__dirname, 'dist'),
-    contentBase: false,
-    index: 'index.html',
-
     compress: true,
     hot: true,
     port: 9000,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
 }
