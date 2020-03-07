@@ -1,9 +1,18 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Banner } from './App/Banner'
+import { Body } from './App/Body'
+import { Footer } from './App/Footer'
 
-import { Hello } from './components/Hello'
+ReactDOM.render(<App />, document.getElementById('root'))
 
-ReactDOM.render(
-  <Hello compiler="TypeScript" framework="React" />,
-  document.getElementById('example')
-)
+function App() {
+  return (
+    <div>
+      123
+      <Banner />
+      <Body />
+      <Footer />
+    </div>
+  )
+}
