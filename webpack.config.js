@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: 'none',
@@ -34,9 +35,38 @@ module.exports = {
         test: /\.js$/,
         loader: 'source-map-loader',
       },
+      {
+        test: /\.less$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true },
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              paths: [path.resolve(__dirname, 'node_modules')],
+            },
+          },
+        ],
+        // use style-loader in development
+        // fallback: 'style-loader',
+      },
+      // {
+      //   test: /\.js$/,
+      //   issuer: /\.less$/,
+      //   use: [
+      //     {
+      //       loader: 'js-to-less-loader',
+      //     },
+      //   ],
+      // }, // use less-loader instead: https://github.com/webpack/webpack/issues/6568#issuecomment-377491754
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
