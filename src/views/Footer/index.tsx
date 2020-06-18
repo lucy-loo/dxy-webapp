@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button } from '../../components/Button/Button'
-import './style.less'
+import './style'
 export function Footer() {
   return (
     <div className="footer">

@@ -15,7 +15,7 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.js', '.ts', '.tsx', '.css', '.scss'],
   },
 
   module: {
@@ -23,11 +23,7 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-          },
-        ],
+        use: [{ loader: 'ts-loader' }],
       },
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
@@ -36,33 +32,19 @@ module.exports = {
         loader: 'source-map-loader',
       },
       {
-        test: /\.less$/,
+        test: /\.s?css$/,
+        exclude: /node_modules/,
         use: [
-          { loader: MiniCssExtractPlugin.loader },
+          'style-loader',
+          'css-loader',
           {
-            loader: 'css-loader',
-            options: { sourceMap: true },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-              paths: [path.resolve(__dirname, 'node_modules')],
-            },
+            loader: 'postcss-loader',
+            // options: {
+            //   cacheDirectory: true,
+            // },
           },
         ],
-        // use style-loader in development
-        // fallback: 'style-loader',
       },
-      // {
-      //   test: /\.js$/,
-      //   issuer: /\.less$/,
-      //   use: [
-      //     {
-      //       loader: 'js-to-less-loader',
-      //     },
-      //   ],
-      // }, // use less-loader instead: https://github.com/webpack/webpack/issues/6568#issuecomment-377491754
     ],
   },
   plugins: [

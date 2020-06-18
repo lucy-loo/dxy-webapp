@@ -6,7 +6,7 @@ import { Map } from './Map'
 import { Rumor } from './Rumor'
 import { Alert } from './Alert'
 import { Infos } from './Infos'
-import './style.less'
+import './style'
 
 export function Body() {
   return (
