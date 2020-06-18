@@ -2,10 +2,13 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   mode: 'none',
-  entry: { app: './src/index.tsx' },
+  entry: {
+    app: './src/index.tsx',
+  },
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, 'dist'),
@@ -35,7 +38,7 @@ module.exports = {
         test: /\.s?css$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -48,8 +51,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({ filename: 'assets/css/[name].[hash:5].css' }),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
 
@@ -84,6 +87,12 @@ module.exports = {
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true,
+        },
+        myStyles: {
+          name: 'myStyle',
+          test: /[\\/]styles[\\/]/,
+          chunks: 'all',
+          enforce: true,
         },
       },
     },

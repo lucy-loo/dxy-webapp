@@ -5,7 +5,7 @@ import { Body } from './views/Body'
 import { Footer } from './views/Footer'
 import { Router, Switch, Route } from 'react-router'
 import { Link, BrowserRouter, HashRouter } from 'react-router-dom'
-import './styles/umi.css'
+import './styles/global'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
