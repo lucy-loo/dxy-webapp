@@ -12,6 +12,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: 'https://cdn.example.com/assets/[hash]/',
   },
   // Enable sourcemaps for debugging webpack's output.
   devtool: process.env.NODE_ENV == 'development' && 'source-map',
@@ -39,13 +40,15 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
           {
-            loader: 'postcss-loader',
-            // options: {
-            //   cacheDirectory: true,
-            // },
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]__[hash:base64:5]',
+              },
+            },
           },
+          'postcss-loader',
         ],
       },
     ],
@@ -88,12 +91,12 @@ module.exports = {
           priority: -20,
           reuseExistingChunk: true,
         },
-        myStyles: {
-          name: 'myStyle',
-          test: /[\\/]styles[\\/]/,
-          chunks: 'all',
-          enforce: true,
-        },
+        // myStyles: {
+        //   name: 'myStyle',
+        //   test: /[\\/]styles[\\/]/,
+        //   chunks: 'all',
+        //   enforce: true,
+        // },
       },
     },
   },
