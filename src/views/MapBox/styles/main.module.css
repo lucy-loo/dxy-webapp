@@ -1,0 +1,85 @@
+.main {
+  background: #fff;
+  padding: 0.16rem;
+
+  li {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0;
+    position: relative;
+    width: 33.3333333%;
+    z-index: 1;
+  }
+  strong {
+    font-size: 0.2rem;
+    font-weight: 700;
+    line-height: 0.25rem;
+    margin-bottom: 0.01rem;
+  }
+  span {
+    color: #333;
+    font-size: 0.11rem;
+    font-weight: 700;
+    line-height: 0.15rem;
+  }
+  ul.count {
+    flex-flow: wrap;
+    position: relative;
+    display: flex;
+    margin: 0;
+    padding: 0.08rem 0 0.12rem;
+  }
+}
+.statistics {
+  font-size: 0.12rem;
+  margin: -0.16rem 0 0;
+  .title {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    line-height: 0.24rem;
+    padding: 0.08rem 0 0.07rem;
+    span {
+      color: #666;
+    }
+    em {
+      align-items: center;
+      background-color: #f7f7f7;
+      border-radius: 0.12rem 0 0 0.12rem;
+      color: #666;
+      display: flex;
+      font-style: normal;
+      height: 0.24rem;
+      justify-content: space-between;
+      margin-right: -0.16rem;
+      padding: 0 0.08rem;
+      img {
+        width: 0.123rem;
+        height: 0.123rem;
+        margin-right: 0.037rem;
+      }
+    }
+  }
+}
+.big-number {
+  background: #fff;
+  position: relative;
+  text-align: center;
+}
+.compare-tips {
+  background: #f7f7f7;
+  border-radius: 0.04rem;
+  border-radius: 0.2rem;
+  color: #666;
+  display: inline-block;
+  font-size: 0.09rem;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  margin: 0.1rem auto 0;
+  padding: 0 0.1rem;
+  text-align: center;
+  width: auto;
+}

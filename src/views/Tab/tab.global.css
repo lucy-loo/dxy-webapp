@@ -1,0 +1,35 @@
+.tab {
+  background-color: #fff;
+  height: 0.44rem;
+  line-height: 0.44rem;
+
+  .inner {
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    height: 0.44rem;
+    line-height: 0.44rem;
+  }
+  span {
+    color: #333;
+    flex: 1 1;
+    font-size: 0.15rem;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+  }
+  .on {
+    color: #4169e2;
+  }
+  i.on {
+    background-color: #4169e2;
+    bottom: 0;
+    display: inline-block;
+    height: 0.03rem;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    width: 0.5rem;
+  }
+}

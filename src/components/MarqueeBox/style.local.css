@@ -1,0 +1,19 @@
+.loop-show-box {
+  background: #fff;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.marquee-content {
+  height: 0.2rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition-property: top;
+  transition-timing-function: ease-in-out;
+  z-index: 2;
+}

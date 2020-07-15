@@ -1,0 +1,9 @@
+.coll {
+	display: flex;
+	flex-flow: wrap;
+	align-items: center;
+	justify-content: flex-start;
+	margin: -.16rem 0 -.02rem;
+	padding: .14rem .16rem .16rem;
+	background: #fff;
+}

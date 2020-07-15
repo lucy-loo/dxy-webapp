@@ -1,0 +1,50 @@
+.top {
+  background: url('https://img1.dxycdn.com/2020/0314/863/3401956761707181858-2.png') no-repeat;
+  background-size: cover;
+  color: #fff;
+  font-size: 0.28rem;
+  height: 0;
+  padding-top: 33.5%;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.pv {
+  background-color: rgba(19, 15, 133, 0.6);
+  border-bottom-left-radius: 0.12rem;
+  border-top-left-radius: 0.12rem;
+  color: #fff;
+  font-size: 0.11rem;
+  height: 0.24rem;
+  line-height: 0.24rem;
+  padding: 0 0.08rem 0 0.12rem;
+  position: absolute;
+  right: 0;
+  top: 0.095rem;
+}
+
+.change-btn {
+  align-items: center;
+  background-color: rgba(0, 0, 249, 0.38);
+  border: 0.005rem solid hsla(0, 0%, 100%, 0.38);
+  border-radius: 0.12rem;
+  bottom: 0.085rem;
+  color: #fff;
+  display: flex;
+  height: 0.24rem;
+  justify-content: center;
+  left: 0.2rem;
+  padding: 0 0.2rem;
+  position: absolute;
+
+  .content {
+    font-size: 0.12rem;
+    margin-left: 0.1rem;
+  }
+
+  .icon {
+    height: 0.11rem;
+    width: 0.11rem;
+  }
+}

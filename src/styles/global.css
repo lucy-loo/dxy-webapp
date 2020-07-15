@@ -1,0 +1,15 @@
+:root {
+  --swiper-navigation-size: 44px;
+  --swiper-theme-color: rgb(0, 122, 255);
+}
+
+:global(#root),
+body,
+html {
+  background: rgb(255, 255, 255);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-size-adjust: none;
+  user-select: none;
+}

@@ -1,0 +1,93 @@
+@import './tabs.module.css';
+@import './main.module.css';
+@import './mapbox.module.css';
+
+.root {
+  margin: 0.1rem 0.16rem;
+
+  li,
+  ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrapper {
+    align-items: center;
+    background: #fff;
+    border: 0.005rem solid #ebebeb;
+    border-radius: 0.04rem;
+    box-shadow: 0 0.02rem 0.06rem 0 rgba(0, 0, 0, 0.05);
+    color: #333;
+    display: flex;
+    font-size: 0.14rem;
+    height: 0.4rem;
+    overflow: hidden;
+    padding: 0 0.12rem;
+    position: relative;
+  }
+
+  .loop-show-box {
+    background: #fff;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .marquee-content {
+    height: 0.2rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition-property: top;
+    transition-timing-function: ease-in-out;
+    z-index: 2;
+  }
+
+  .li-style {
+    align-items: center;
+    color: #333;
+    display: flex;
+    height: 0.2rem;
+    line-height: 0.17rem;
+    overflow: hidden;
+    padding-right: 0.2rem;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .left-text {
+    background-color: #ffefed;
+    border-radius: 0.02rem;
+    color: #f74c31;
+    flex: none;
+    font-size: 0.12rem;
+    line-height: 0.17rem;
+    padding: 0 0.03rem;
+    vertical-align: middle;
+  }
+
+  .message {
+    flex: auto;
+    font-size: 0.14rem;
+    margin-left: 0.08rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .right-icon {
+    flex: none;
+    height: 0.12rem;
+    margin-top: -0.06rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.12rem;
+    z-index: 1;
+  }
+}
