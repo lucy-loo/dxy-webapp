@@ -1,8 +1,8 @@
-import * as React from 'react'
-import * as globalStyle from '@/styles/index.module.css'
+import React from 'react'
+import localStyle from './index.module.css'
 
 function BottomLogo() {
-  return <div className={globalStyle.bottomLogo} />
+  return <div className={localStyle.bottomLogo} />
 }
 
 export default BottomLogo

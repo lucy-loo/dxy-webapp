@@ -1,0 +1,7 @@
+.bottom-logo {
+  width: 1.795rem;
+  height: 0.31rem;
+  margin: 0.16rem auto;
+  background-image: url(./logo.png);
+  background-size: 100% 100%;
+}
