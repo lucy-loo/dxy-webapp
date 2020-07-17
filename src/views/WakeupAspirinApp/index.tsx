@@ -1,5 +1,6 @@
-import * as React from 'react'
-import * as globalStyle from '@/styles/index.module.css'
+import React from 'react'
+import localStyle from './index.module.css'
+import img from './wake.png'
 
 function WakeupAspirinApp(): JSX.Element {
   function onClick() {
@@ -21,7 +22,14 @@ function WakeupAspirinApp(): JSX.Element {
     //     }, 500));
   }
   // eslint-disable-next-line
-  return <div className={globalStyle.wakeupAspirinApp} onClick={onClick} />
+  return (
+    <div className={localStyle.wakeup} onClick={onClick}>
+      <div className={localStyle.inner}>
+        <img src={img} alt="打开丁香医生" className={localStyle.icon} />
+        <span className={localStyle.text}>打开丁香医生 App 查看更多数据</span>
+      </div>
+    </div>
+  )
 }
 
 export default WakeupAspirinApp

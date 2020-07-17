@@ -1,0 +1,40 @@
+.wakeup {
+  position: fixed;
+  right: 0;
+  bottom: 0.2rem;
+  left: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  height: 0.4rem;
+  padding: 0 0.16rem calc(-0.56rem - env(safe-area-inset-bottom));
+  font-size: 0.16rem;
+  line-height: 0.44rem;
+  text-align: center;
+  transition: bottom 0.3s;
+  .inner {
+    position: relative;
+    display: flex;
+    flex: 1 1;
+    align-items: center;
+    justify-content: center;
+    height: 0.4rem;
+    background-color: #00c791;
+    border: 0.01rem solid #00c791;
+    border-radius: 0.2rem;
+    box-shadow: 0 0.02rem 0.06rem 0 rgba(164, 100, 78, 0.3);
+  }
+  .icon {
+    display: inline-block;
+    width: 0.19rem;
+    height: 0.19rem;
+  }
+  .text {
+    margin-left: 0.05rem;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.15rem;
+  }
+}
