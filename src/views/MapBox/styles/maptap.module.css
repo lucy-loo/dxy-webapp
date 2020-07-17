@@ -1,0 +1,24 @@
+p.map-tap{
+  border-top: 0.005rem solid #ebebeb;
+  border-bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 0.44rem;
+  padding: 0 0 0 0.16rem;
+  font-weight: 500;
+  font-size: 0.17rem;
+  line-height: 0.44rem;
+  background: #fff;
+  border-bottom: 0.005rem solid #ebebeb;
+
+  i {
+    display: inline-block;
+    width: 0.04rem;
+    height: 0.16rem;
+    margin-right: 0.08rem;
+    vertical-align: middle;
+    background: #4169e2;
+  }
+}

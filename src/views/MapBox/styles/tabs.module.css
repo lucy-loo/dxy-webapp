@@ -34,6 +34,15 @@
         right: -0.12rem;
       }
     }
+    &:last-child {
+      border-radius: 0 0.12rem 0 0;
+      &::before {
+        left: -0.12rem;
+        height: 100%;
+        background: #fff;
+        border-radius: 0.12rem 0 0 0;
+      }
+    }
     &.current {
       background-color: #fff;
       color: #4169e2;

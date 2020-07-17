@@ -1,0 +1,105 @@
+.big-number {
+  background: #fff;
+  position: relative;
+  text-align: center;
+  &::after {
+    position: absolute;
+    top: -0.01rem;
+    left: -0.01rem;
+    display: block;
+    width: 200%;
+    height: 200%;
+    border: 0.01rem solid #ebebeb;
+    border-radius: 0.08rem;
+    box-shadow: 0 0.04rem 0.12rem 0 rgba(0, 0, 0, 0.05);
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    content: '';
+  }
+  ul {
+    &[data-partion='3'] li {
+      width: 33.3333333%;
+      &:nth-child(n + 4) {
+        margin-top: 0.12rem;
+      }
+    }
+    &[data-partion='4'] li {
+      width: 25%;
+    }
+  }
+
+  li {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+
+    &:not(:nth-child(3n + 1))::before {
+      position: absolute;
+      bottom: 0.04rem;
+      left: -0.005rem;
+      z-index: 2;
+      width: 0.01rem;
+      height: 0.4rem;
+      margin-top: -0.15rem;
+      background-image: linear-gradient(180deg, #eee, #e1e1e1 51%, #fff);
+      content: '';
+    }
+  }
+  strong {
+    font-size: 0.2rem;
+    font-weight: 700;
+    line-height: 0.25rem;
+    margin-bottom: 0.01rem;
+  }
+  span {
+    color: #333;
+    font-size: 0.11rem;
+    font-weight: 700;
+    line-height: 0.15rem;
+  }
+  ul.count {
+    flex-flow: wrap;
+    position: relative;
+    display: flex;
+    margin: 0;
+    padding: 0.08rem 0 0.12rem;
+  }
+  .compare-tips {
+    background: #f7f7f7;
+    border-radius: 0.04rem;
+    border-radius: 0.2rem;
+    color: #666;
+    display: inline-block;
+    font-size: 0.09rem;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    margin: 0.1rem auto 0;
+    padding: 0 0.1rem;
+    text-align: center;
+    width: auto;
+  }
+  .create {
+    &-item {
+      position: relative;
+      text-align: center;
+    }
+    &-count {
+      display: flex;
+      align-items: center;
+      height: 0.12rem;
+      margin-bottom: 0.02rem;
+      color: #666;
+      font-weight: 400;
+      font-size: 0.09rem;
+      em {
+        font-weight: 400;
+        font-style: normal;
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+.main {
+  background: #fff;
+  padding: 0.16rem;
+  .statistics {
+    font-size: 0.12rem;
+    margin: -0.16rem 0 0;
+  }
+}

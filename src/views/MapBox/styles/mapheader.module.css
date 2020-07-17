@@ -1,0 +1,27 @@
+.title {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  line-height: 0.24rem;
+  padding: 0.08rem 0 0.07rem;
+  span {
+    color: #666;
+  }
+  em {
+    align-items: center;
+    background-color: #f7f7f7;
+    border-radius: 0.12rem 0 0 0.12rem;
+    color: #666;
+    display: flex;
+    font-style: normal;
+    height: 0.24rem;
+    justify-content: space-between;
+    margin-right: -0.16rem;
+    padding: 0 0.08rem;
+    img {
+      width: 0.123rem;
+      height: 0.123rem;
+      margin-right: 0.037rem;
+    }
+  }
+}
