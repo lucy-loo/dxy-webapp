@@ -31,7 +31,7 @@ function App() {
     document.documentElement.clientHeight && setClientHeight(document.documentElement.clientHeight)
   }, [])
   return (
-    <div className={classNames(globalStyle.wrapper)} style={{ maxHeight: clientHeight }}>
+    <div className={classNames(globalStyle.wrapper)} style={{ minHeight: clientHeight }}>
       <HashRouter>
         <Top />
         <Tab<TabIndexEnum>
