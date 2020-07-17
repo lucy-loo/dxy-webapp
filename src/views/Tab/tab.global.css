@@ -9,14 +9,14 @@
     display: flex;
     height: 0.44rem;
     line-height: 0.44rem;
-  }
-  span {
-    color: #333;
-    flex: 1 1;
-    font-size: 0.15rem;
-    position: relative;
-    text-align: center;
-    vertical-align: top;
+    span {
+      color: #333;
+      flex: 1 1;
+      font-size: 0.15rem;
+      position: relative;
+      text-align: center;
+      vertical-align: top;
+    }
   }
   .on {
     color: #4169e2;

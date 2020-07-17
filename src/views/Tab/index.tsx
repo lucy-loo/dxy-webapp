@@ -45,21 +45,22 @@ function Tab<TabIndexEnum>(props: { content: ContentType<TabIndexEnum>[] }): JSX
     [tabHeight]
   )
   return (
-    <div className={globalStyle.tab} ref={tabRef}>
-      <div className={globalStyle.inner}>
-        {propsContent.map((v) => (
-          <InnerItem
-            key={v.index}
-            isOn={currentTab === v.index}
-            onClick={handleClickTabHead.bind(this, refMap.get(v.index), v.index)}
-          >
-            {v.tabHead}
-          </InnerItem>
-        ))}
+    <>
+      <div className={globalStyle.tab} ref={tabRef}>
+        <div className={globalStyle.inner}>
+          {propsContent.map((v) => (
+            <InnerItem
+              key={v.index}
+              isOn={currentTab === v.index}
+              onClick={handleClickTabHead.bind(this, refMap.get(v.index), v.index)}
+            >
+              {v.tabHead}
+            </InnerItem>
+          ))}
+        </div>
       </div>
-      <div />
       {content && content.map((v) => <React.Fragment key={v.key}>{v}</React.Fragment>)}
-    </div>
+    </>
   )
 }
 
