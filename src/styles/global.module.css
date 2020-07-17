@@ -10,6 +10,10 @@
     font-size: 0;
     text-decoration: none;
   }
+  p {
+    margin: 0;
+    padding: 0;
+  }
 
   // 当且仅当css module是全局的才放到这里，否则请单独在每个js入口引入
   @import url('../views/Top/top.global.css');
