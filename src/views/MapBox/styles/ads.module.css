@@ -1,6 +1,6 @@
 .coll {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 33.33%);
   grid-gap: 0.025rem .015rem;
   align-items: center;
   margin: -0.16rem 0 -0.02rem;
