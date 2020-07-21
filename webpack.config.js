@@ -3,90 +3,127 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { env } = require('process')
+const TerserPlugin = require('terser-webpack-plugin')
 
-const isDev = env.NODE_ENV
-module.exports = {
-  mode: env.NODE_ENV,
-  entry: {
-    app: './src/index.tsx',
-  },
-  output: {
-    filename: '[name].[hash].js',
-    path: path.resolve(__dirname, 'dist'),
-    // publicPath: 'https://cdn.example.com/assets/[hash]/',
-  },
-  // Enable sourcemaps for debugging webpack's output.
-  devtool: isDev ? 'source-map' : undefined,
+module.exports = function (env, args) {
+  const isDev = args.mode == 'development'
+  return {
+    mode: args.mode,
+    entry: './src/index.tsx',
+    output: {
+      filename: '[name].[hash:5].js',
+      path: path.resolve(__dirname, 'dist'),
+      // publicPath: 'https://cdn.example.com/assets/[hash]/',
+    },
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: isDev ? 'source-map' : undefined,
 
-  resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.js', '.ts', '.tsx', '.css'],
-    alias: { '@': path.resolve(__dirname, 'src') },
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
-      },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader',
-      },
-      {
-        test: /\.(jpe?g|png|gif|bmp|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 10 * 1024, // 10k
-              name: `assets/imgs/[name]${isDev ? '' : '.[hash:base64:8]'}.[ext]`,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              localsConvention: 'camelCaseOnly',
-              modules: {
-                auto: true,
-                localIdentName: '[local]__[hash:base64:5]',
+    resolve: {
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: ['.js', '.ts', '.tsx', '.css'],
+      alias: { '@': path.resolve(__dirname, 'src') },
+    },
+    module: {
+      rules: [
+        {
+          test: /\.ts(x?)$/,
+          exclude: /node_modules/,
+          use: ['babel-loader', 'eslint-loader'],
+        },
+        // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+        {
+          enforce: 'pre',
+          test: /\.js$/,
+          loader: 'source-map-loader',
+        },
+        {
+          test: /\.(jpe?g|png|gif|bmp|svg)$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 10 * 1024, // 10k
+                name: `assets/imgs/[name]${isDev ? '' : '.[hash:base64:8]'}.[ext]`,
               },
             },
-          },
-          'postcss-loader',
-        ],
-      },
+          ],
+        },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                localsConvention: 'camelCaseOnly',
+                modules: {
+                  auto: true,
+                  localIdentName: '[local]__[hash:base64:5]',
+                },
+              },
+            },
+            'postcss-loader',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new MiniCssExtractPlugin({ filename: 'assets/css/[name].[hash:5].css' }),
+      new HtmlWebpackPlugin({ template: './src/index.html' }),
     ],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: 'assets/css/[name].[hash:5].css' }),
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
-  ],
 
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
+    // When importing a module whose path matches one of the following, just
+    // assume a corresponding global variable exists and use that instead.
+    // This is important because it allows us to avoid bundling all of our
+    // dependencies, which allows browsers to cache those libraries between builds.
+    // externals: {
+    // react: 'React',
+    // 'react-dom': 'ReactDOM',
+    // },
 
-  devServer: {
-    compress: true,
-    hot: true,
-    port: 9000,
-  },
+    devServer: {
+      compress: true,
+      hot: true,
+      port: 9000,
+    },
+
+    optimization: {
+      splitChunks: {
+        chunks: 'async',
+        minSize: 30000,
+        maxSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: '~',
+        automaticNameMaxLength: 30,
+        name: true,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            // priority: -10,
+            chunks: 'all',
+            name: 'vendor',
+            // enforce: true,
+          },
+          default: {
+            chunks: 'all',
+            minChunks: 2,
+            // priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      },
+      // minimize: true,
+      // minimizer: [
+      //   new TerserPlugin({
+      //     // 删除comment
+      //     // terserOptions: { output: { comments: false } },
+      //     // extractComments: false,
+      //   }),
+      // ],
+    },
+  }
 }

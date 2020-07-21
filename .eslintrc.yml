@@ -3,7 +3,7 @@ env:
   es2020: true
 extends:
   - plugin:react/recommended
-  - airbnb-base
+  # - airbnb-base
   - airbnb/rules/react
   - plugin:@typescript-eslint/eslint-recommended
   - plugin:@typescript-eslint/recommended
@@ -28,4 +28,5 @@ rules:
     react/jsx-filename-extension: off,
     react/button-has-type: off,
     '@typescript-eslint/explicit-module-boundary-types': off,
+    '@typescript-eslint/no-var-requires': off,
   }
