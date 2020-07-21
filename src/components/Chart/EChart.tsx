@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as EChart from 'echarts'
+import React from 'react'
+import EChart from 'echarts'
 
 interface MyChartProps {
   opt: echarts.EChartOption

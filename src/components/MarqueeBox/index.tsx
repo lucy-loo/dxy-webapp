@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as localStyle from './style.local.css'
+import React from 'react'
+import localStyle from './style.local.css'
 
 function MarqueeBox(props: { content: React.ReactNode[] }): JSX.Element {
   const { content } = props
