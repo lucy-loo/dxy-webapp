@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import EChart from 'echarts'
 
 interface MyChartProps {
-  opt: echarts.EChartOption
+  options: echarts.EChartOption
+  width: number
+  height: number
 }
 
 function MyEChart(props: MyChartProps): JSX.Element {
-  const { opt } = props
-  const [ech, setEch] = React.useState<echarts.ECharts>()
+  const { options, height, width } = props
+  const [chart, setChart] = React.useState<echarts.ECharts>()
   const eleRef = React.useRef()
-  React.useEffect(() => {
-    eleRef?.current && setEch(EChart.init(eleRef.current))
+  useEffect(() => {
+    eleRef?.current && setChart(EChart.init(eleRef.current))
   }, [eleRef])
-  return <div ref={eleRef} />
+  useEffect(() => {
+    chart && chart.setOption(options)
+  }, [chart, options])
+  return <div ref={eleRef} style={{ width, height }} />
 }
 
 export default MyEChart
