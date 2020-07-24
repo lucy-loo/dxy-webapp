@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = function (env, args) {
   const isDev = args.mode == 'development'
@@ -69,6 +70,7 @@ module.exports = function (env, args) {
       ],
     },
     plugins: [
+      new CopyPlugin({ patterns: [{ from: 'src/assets/json', to: 'assets/json' }] }),
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({ filename: 'assets/css/[name].[hash:5].css' }),
       new HtmlWebpackPlugin({ template: './src/index.html' }),
