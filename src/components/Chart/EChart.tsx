@@ -3,8 +3,12 @@ import EChart from 'echarts'
 
 interface MyChartProps {
   options: echarts.EChartOption
-  width: number
   height: number
+  width?: number
+}
+
+MyEChart.defaultProps = {
+  width: document.body.clientWidth,
 }
 
 function MyEChart(props: MyChartProps): JSX.Element {
@@ -17,7 +21,7 @@ function MyEChart(props: MyChartProps): JSX.Element {
   useEffect(() => {
     chart && chart.setOption(options)
   }, [chart, options])
-  return <div ref={eleRef} style={{ width, height }} />
+  return <div ref={eleRef} style={{ width: width || document.body.clientWidth, height }} />
 }
 
 export default MyEChart

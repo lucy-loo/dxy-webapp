@@ -22,7 +22,7 @@ function ChinaMap(): JSX.Element {
       <Statist type={StatistType.China} data={data} />
       <Ads />
       <MapTap>国内疫情地图</MapTap>
-      <MyEChart width={600} height={400} options={options} />
+      <MyEChart height={300} options={options} />
     </>
   )
 }
