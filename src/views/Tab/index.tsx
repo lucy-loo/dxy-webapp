@@ -1,16 +1,17 @@
 /* eslint-disable */
-import React from 'react'
+import React, { useMemo } from 'react'
 import * as globalStyle from '@/styles/index.module.css'
+import WrapArray from '@/utils/array'
 
-interface ContentType<TabIndexEnum> {
-  index: TabIndexEnum
+interface ContentType {
+  index: number
   tabHead: React.ReactNode
   tabContent: React.ReactElement<any>
 }
 
-function useRefedContent<TabIndexEnum>(
-  eles: ContentType<TabIndexEnum>[]
-): [Map<TabIndexEnum, React.MutableRefObject<HTMLElement>>, React.ReactElement[]] {
+function useRefedContent(
+  eles: ContentType[]
+): [Map<number, React.MutableRefObject<HTMLElement>>, React.ReactElement[]] {
   const contentArr: React.ReactElement[] = []
   const refMap = new Map(
     eles.map((ele) => {
@@ -26,7 +27,7 @@ function useRefedContent<TabIndexEnum>(
   return [refMap, contentArr]
 }
 
-function Tab<TabIndexEnum>(props: { content: ContentType<TabIndexEnum>[] }): JSX.Element {
+function Tab<TabIndexEnum>(props: { content: ContentType[] }): JSX.Element {
   const { content: propsContent } = props
   const tabRef = React.useRef<HTMLDivElement>()
   const [tabHeight, setTabHeight] = React.useState(0)
@@ -37,6 +38,8 @@ function Tab<TabIndexEnum>(props: { content: ContentType<TabIndexEnum>[] }): JSX
   }, [])
   const handleClickTabHead = React.useCallback(
     (ref: React.RefObject<HTMLDivElement>, i: TabIndexEnum) => {
+      console.log('clicked', ref)
+
       if (!ref.current) return
       const headEle = ref.current
       window.scrollTo(0, headEle.offsetTop - tabHeight)
@@ -48,10 +51,10 @@ function Tab<TabIndexEnum>(props: { content: ContentType<TabIndexEnum>[] }): JSX
     <>
       <div className={globalStyle.tab} ref={tabRef}>
         <div className={globalStyle.inner}>
-          {propsContent.map((v) => (
+          {propsContent.map((v, i) => (
             <InnerItem
-              key={v.index}
-              isOn={currentTab === v.index}
+              key={i}
+              isOn={(currentTab as unknown) === v.index}
               onClick={handleClickTabHead.bind(this, refMap.get(v.index), v.index)}
             >
               {v.tabHead}
@@ -59,7 +62,7 @@ function Tab<TabIndexEnum>(props: { content: ContentType<TabIndexEnum>[] }): JSX
           ))}
         </div>
       </div>
-      {content && content.map((v) => <React.Fragment key={v.key}>{v}</React.Fragment>)}
+      {content && content.map((v, i) => <React.Fragment key={i}>{v}</React.Fragment>)}
     </>
   )
 }

@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useMemo, useEffect } from 'react'
 import localStyle from './style.local.css'
+import WrapArray from '@/utils/array'
 
 function MarqueeBox(props: { content: React.ReactNode[] }): JSX.Element {
   const { content } = props
+  const cont = useMemo(() => WrapArray(content), [content])
+
   return (
     <div className={localStyle.root}>
       <div className={localStyle.wrapper}>
         <div className={localStyle.loopShowBox}>
           <ul className={localStyle.marqueeContent} style={{ top: 0, transitionDuration: '1s' }}>
-            {content.map((v, i) => (
-              <li key={i} className={localStyle.liStyle}>
+            {cont.map((v) => (
+              <li key={v.id} className={localStyle.liStyle}>
                 {v}
               </li>
             ))}

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import image from '@/assets/imgs/right-arrow.png'
 import localStyle from './styles/top.module.css'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
+import WrapArray from '@/utils/array'
 
 interface MarqueeProps {
   contents: { title: string; msg: string; src: string }[]
@@ -87,7 +88,7 @@ function Marquee(props: MarqueeProps): JSX.Element {
   // useEffect(() => {
   //   setDuration_ms(index ? _duration_ms : 0)
   // }, [index, _duration_ms])
-
+  const cont = useMemo(() => WrapArray(contents), [contents])
   return !contents || !contents.length ? null : (
     <div className={localStyle.root}>
       <div className={localStyle.wrapper}>
@@ -101,8 +102,8 @@ function Marquee(props: MarqueeProps): JSX.Element {
               transitionDuration: `${duration_ms}ms`,
             }}
           >
-            {contents.map((con) => (
-              <li className={localStyle.liStyle} data-src={con.src} onClick={toHref}>
+            {cont.map((con) => (
+              <li key={con.id} className={localStyle.liStyle} data-src={con.src} onClick={toHref}>
                 <div className={localStyle.leftText}>{con.title}</div>
                 <div className={localStyle.message}>{con.msg}</div>
                 <div className={localStyle.rightIcon}>

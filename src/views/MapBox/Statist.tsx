@@ -8,12 +8,13 @@ export enum StatistType {
   China,
   Global,
 }
-interface StatistProps extends PropsWithChildren<any> {
+interface StatistProps extends PropsWithChildren<unknown> {
   type: StatistType
-  data: { val: number; delta: number; type: NumItemType }[]
+  data: { id: string; val: number; delta: number; type: NumItemType }[]
 }
 function Statist(props: StatistProps) {
   const { type, data } = props
+
   return (
     <div className={localStyle.main}>
       <div className={localStyle.statistics}>
@@ -22,7 +23,7 @@ function Statist(props: StatistProps) {
           <p className={numberPannelStyle.compareTips}>较昨日变化数据：待国家卫健委数据公布中</p>
           <ul className={numberPannelStyle.count} data-partion={type === StatistType.China ? '3' : '4'}>
             {data.map((d) => (
-              <NumberItem num={d.val} sub={d.type} delta={d.delta} />
+              <NumberItem key={d.id} num={d.val} sub={d.type} delta={d.delta} />
             ))}
             {/* <NumberItem num={100} sub={NumItemType.INPUT} delta={9} />
             <NumberItem num={100} sub={NumItemType.NoSumtu} delta={0} />

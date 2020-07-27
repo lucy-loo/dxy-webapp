@@ -2,6 +2,7 @@ import React from 'react'
 import { NumItemType } from './NumberPannelItem'
 import Statist, { StatistType } from './Statist'
 import MapTap from './MapTap'
+import WrapArray from '@/utils/array'
 
 const data = [
   { val: 100, type: NumItemType.CUR, delta: 0 },
@@ -12,7 +13,7 @@ const data = [
 function GlobalMap() {
   return (
     <>
-      <Statist type={StatistType.Global} data={data} />
+      <Statist type={StatistType.Global} data={WrapArray(data)} />
       <MapTap>重点国家疫情数据</MapTap>
     </>
   )

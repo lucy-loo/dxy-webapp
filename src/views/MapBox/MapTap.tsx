@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import localStyle from './styles/maptap.module.css'
 
-function MapTap(props: PropsWithChildren<any>) {
+function MapTap(props: PropsWithChildren<unknown>) {
   const { children } = props
   return (
     <p className={localStyle.mapTap}>

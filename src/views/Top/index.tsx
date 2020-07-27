@@ -3,6 +3,7 @@ import * as globalStyle from '@/styles/index.module.css'
 import classnames from 'classnames'
 // import * as localStyle from './top.local.css'
 import image from '@/assets/imgs/switch.png'
+import formatNumber from '@/utils/formatter'
 
 function Top(): JSX.Element {
   return (
@@ -16,9 +17,9 @@ function Top(): JSX.Element {
 export default Top
 
 function Pv() {
-  const [pv, setPv] = React.useState(0)
+  const [pv, setPv] = React.useState('')
   React.useEffect(() => {
-    setPv(12345678)
+    setPv(formatNumber(dxyData.getPV))
   }, [])
   return <div className={globalStyle.pv}>{pv}人次已浏览</div>
 }
