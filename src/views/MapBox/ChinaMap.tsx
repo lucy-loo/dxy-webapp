@@ -7,12 +7,12 @@ import MyEChart from '@/components/Chart/EChart'
 import WrapArray from '@/utils/array'
 
 const data = [
-  { val: 100, type: NumItemType.CUR, delta: 0 },
-  { val: 100, type: NumItemType.INPUT, delta: 0 },
-  { val: 100, type: NumItemType.NoSumtu, delta: 0 },
-  { val: 100, type: NumItemType.AccCurr, delta: 0 },
-  { val: 100, type: NumItemType.AccDead, delta: 0 },
-  { val: 100, type: NumItemType.AccCure, delta: 0 },
+  { val: 100, type: NumItemType.CUR, delta: 100 },
+  { val: 100, type: NumItemType.INPUT, delta: 100 },
+  { val: 100, type: NumItemType.NoSumtu, delta: 100 },
+  { val: 100, type: NumItemType.AccCurr, delta: 100 },
+  { val: 100, type: NumItemType.AccDead, delta: 100 },
+  { val: 100, type: NumItemType.AccCure, delta: 100 },
 ]
 
 const options = {}

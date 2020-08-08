@@ -25,11 +25,6 @@ function Statist(props: StatistProps) {
             {data.map((d) => (
               <NumberItem key={d.id} num={d.val} sub={d.type} delta={d.delta} />
             ))}
-            {/* <NumberItem num={100} sub={NumItemType.INPUT} delta={9} />
-            <NumberItem num={100} sub={NumItemType.NoSumtu} delta={0} />
-            <NumberItem num={100} sub={NumItemType.AccCurr} delta={143} />
-            <NumberItem num={100} sub={NumItemType.AccDead} delta={0} />
-            <NumberItem num={100} sub={NumItemType.AccCure} delta={45} /> */}
           </ul>
         </div>
       </div>
