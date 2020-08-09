@@ -17,6 +17,17 @@
       text-align: center;
       vertical-align: top;
     }
+    &.fixed {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 15;
+      background-color: #4169e2;
+      span {
+        color: #fff;
+      }
+    }
   }
   .on {
     color: #4169e2;

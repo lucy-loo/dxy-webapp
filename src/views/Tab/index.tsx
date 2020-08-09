@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useMemo } from 'react'
-import * as globalStyle from '@/styles/index.module.css'
+import * as tabStyle from '@/styles/index.module.css'
+import classNames from 'classnames'
 import WrapArray from '@/utils/array'
 
 interface ContentType {
@@ -26,13 +27,19 @@ function useRefedContent(
   )
   return [refMap, contentArr]
 }
+console.log(tabStyle)
 
-function Tab<TabIndexEnum>(props: { content: ContentType[] }): JSX.Element {
-  const { content: propsContent } = props
+function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean }): JSX.Element {
+  const { content: propsContent, isFixed } = props
   const tabRef = React.useRef<HTMLDivElement>()
   const [tabHeight, setTabHeight] = React.useState(0)
   const [currentTab, setCurrentTab] = React.useState<TabIndexEnum>()
   const [refMap, content] = useRefedContent(propsContent)
+  // const clsNames = useMemo(() => classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }), [isFixed])
+  const [clsNames, setClsNames] = React.useState('')
+  React.useEffect(() => {
+    setClsNames(classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }))
+  }, [isFixed])
   React.useEffect(() => {
     tabRef.current && setTabHeight(tabRef.current.clientHeight)
   }, [])
@@ -49,8 +56,8 @@ function Tab<TabIndexEnum>(props: { content: ContentType[] }): JSX.Element {
   )
   return (
     <>
-      <div className={globalStyle.tab} ref={tabRef}>
-        <div className={globalStyle.inner}>
+      <div className={tabStyle.tab} ref={tabRef}>
+        <div className={clsNames}>
           {propsContent.map((v, i) => (
             <InnerItem
               key={i}
@@ -71,7 +78,7 @@ export default Tab
 
 function InnerItem(props: React.HtmlHTMLAttributes<HTMLSpanElement> & { isOn: boolean }) {
   return (
-    <span className={props.isOn ? globalStyle.on : null} onClick={(e) => props.onClick(e)}>
+    <span className={props.isOn ? tabStyle.on : null} onClick={(e) => props.onClick(e)}>
       {props.children}
       <i />
     </span>

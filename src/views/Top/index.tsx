@@ -5,14 +5,12 @@ import classnames from 'classnames'
 import image from '@/assets/imgs/switch.png'
 import formatNumber from '@/utils/formatter'
 
-function Top(): JSX.Element {
-  return (
-    <div className={classnames(globalStyle.top)}>
-      <Pv />
-      <SwitchLanguage />
-    </div>
-  )
-}
+const Top = React.forwardRef<HTMLDivElement>((props, ref) => (
+  <div ref={ref} className={classnames(globalStyle.top)}>
+    <Pv />
+    <SwitchLanguage />
+  </div>
+))
 
 export default Top
 

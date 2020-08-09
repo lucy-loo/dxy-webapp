@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useReducer, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import classNames from 'classnames'
@@ -12,6 +12,7 @@ import WikiTab from './views/WikiTab'
 import BottomLogo from './views/BottomLogo'
 import RealTimeAlert from './views/RealTimeAlert'
 import WakeupAspirinApp from './views/WakeupAspirinApp'
+import { throttle } from 'lodash'
 
 enum TabIndexEnum {
   MAP,
@@ -22,19 +23,33 @@ enum TabIndexEnum {
 ReactDOM.render(<App />, document.getElementById('root'))
 
 function App() {
+  const topRef = useRef<HTMLDivElement>()
+
   React.useEffect(() => {
+    const cbFun = throttle((e) => {
+      if (!topRef.current) return
+      setIsFixed(topRef.current.getBoundingClientRect().bottom < 0)
+    }, 20)
     document.title = 'copy-全球新冠病毒最新实时疫情地图_丁香园'
+    window.addEventListener('scroll', cbFun)
+    return () => {
+      window.removeEventListener('scroll', cbFun)
+    }
   }, [])
+  const [isFixed, setIsFixed] = React.useState(false)
   const [clientHeight, setClientHeight] = React.useState<number>(null)
   React.useEffect(() => {
     // didMount
     document.documentElement.clientHeight && setClientHeight(document.documentElement.clientHeight)
   }, [])
+  const clsName = React.useMemo(() => classNames(globalStyle.wrapper), [])
+
   return (
-    <div className={classNames(globalStyle.wrapper)} style={{ minHeight: clientHeight }}>
+    <div className={clsName} style={{ minHeight: clientHeight }}>
       <HashRouter>
-        <Top />
+        <Top ref={topRef} />
         <Tab<TabIndexEnum>
+          isFixed={isFixed}
           content={[
             {
               index: TabIndexEnum.MAP,
