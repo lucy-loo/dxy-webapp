@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import EChart from 'echarts'
+import 'echarts/map/js/china'
 
 interface MyChartProps {
   options: echarts.EChartOption
