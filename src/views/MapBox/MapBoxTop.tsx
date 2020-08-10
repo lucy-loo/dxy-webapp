@@ -25,7 +25,7 @@ function setInterval(size: number, clb: () => void, delay_ms: number) {
     // clearInterval(timer)
     clb()
     count = (count + 1) % size
-    timer = window.setTimeout(() => callback(count == 0 ? 0 : delay), delay)
+    timer = window.setTimeout(() => callback(count == 0 ? 0 : delay), 5000)
     console.log(timer, delay, size, count)
   }
 }
@@ -69,25 +69,6 @@ function Marquee(props: MarqueeProps): JSX.Element {
       clearInterval()
     }
   }, [delay_ms, contents, contentRef])
-  // useEffect(() => {
-  //   !timer &&
-  //     setInterval(
-  //       contents.length,
-  //       () => {
-  //         setIndex((i) => {
-  //           return (i + 1) % contents.length
-  //         })
-  //         setDuration_ms(index ? _duration_ms : 0)
-  //       },
-  //       delay_ms
-  //     )
-  //   return () => {
-  //     clearInterval()
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   setDuration_ms(index ? _duration_ms : 0)
-  // }, [index, _duration_ms])
   const cont = useMemo(() => WrapArray(contents), [contents])
   return !contents || !contents.length ? null : (
     <div className={localStyle.root}>

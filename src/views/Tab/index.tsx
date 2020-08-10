@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import * as tabStyle from '@/styles/index.module.css'
 import classNames from 'classnames'
 import WrapArray from '@/utils/array'
@@ -11,23 +11,34 @@ interface ContentType {
 }
 
 function useRefedContent(
-  eles: ContentType[]
+  eles: ContentType[],
+  ref: React.MutableRefObject<HTMLElement>
 ): [Map<number, React.MutableRefObject<HTMLElement>>, React.ReactElement[]] {
-  const contentArr: React.ReactElement[] = []
-  const refMap = new Map(
-    eles.map((ele) => {
-      const ref = React.useRef<HTMLElement>()
-      const RefedContent = React.forwardRef<HTMLElement>((props, ref2) => {
-        return React.cloneElement(ele.tabContent, { ...props, ref: ref2 })
-        // return <div ref={ref2}>{ele.tabContent}</div>;
+  const [contentArr, setContentArr] = React.useState<React.ReactElement[]>([])
+  const [refMap, setRefMap] = React.useState<Map<number, React.MutableRefObject<HTMLElement>>>(new Map())
+  React.useEffect(() => {
+    let contentArr = [] as React.ReactElement[],
+      refMap
+
+    refMap = new Map(
+      eles.map((ele) => {
+        const RefedContent = React.forwardRef<HTMLElement>((props, ref2) => {
+          // console.log(ele.tabContent, props)
+          const res = React.cloneElement(ele.tabContent, { ...props, ref: ref2 })
+          console.log(res)
+          return res
+          // return <div ref={ref2}>{ele.tabContent}</div>;
+        })
+        contentArr.push(<RefedContent ref={ref} />)
+        return [ele.index, ref]
       })
-      contentArr.push(<RefedContent ref={ref} />)
-      return [ele.index, ref]
-    })
-  )
+    )
+
+    setContentArr(contentArr)
+    setRefMap(refMap)
+  }, [eles])
   return [refMap, contentArr]
 }
-console.log(tabStyle)
 
 function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean }): JSX.Element {
   const { content: propsContent, isFixed } = props
@@ -35,11 +46,7 @@ function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean })
   const [tabHeight, setTabHeight] = React.useState(0)
   const [currentTab, setCurrentTab] = React.useState<TabIndexEnum>()
   const [refMap, content] = useRefedContent(propsContent)
-  // const clsNames = useMemo(() => classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }), [isFixed])
-  const [clsNames, setClsNames] = React.useState('')
-  React.useEffect(() => {
-    setClsNames(classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }))
-  }, [isFixed])
+  const clsNames = useMemo(() => classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }), [isFixed])
   React.useEffect(() => {
     tabRef.current && setTabHeight(tabRef.current.clientHeight)
   }, [])
@@ -54,7 +61,7 @@ function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean })
     },
     [tabHeight]
   )
-  return (
+  const res = (
     <>
       <div className={tabStyle.tab} ref={tabRef}>
         <div className={clsNames}>
@@ -69,9 +76,11 @@ function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean })
           ))}
         </div>
       </div>
-      {content && content.map((v, i) => <React.Fragment key={i}>{v}</React.Fragment>)}
+      {propsContent && propsContent.map((v, i) => <React.Fragment key={i}>{v.tabContent}</React.Fragment>)}
     </>
   )
+  console.log(res)
+  return res
 }
 
 export default Tab
