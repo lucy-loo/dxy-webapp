@@ -8,8 +8,8 @@ import WrapArray from '@/utils/array'
 
 interface MarqueeProps {
   contents: { title: string; msg: string; src: string }[]
-  delay_ms?: number
-  duration_ms?: number
+  interval_ms?: number
+  animation_duration_ms?: number
 }
 
 let timer = 0
@@ -18,57 +18,57 @@ function toHref(event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
   window.document.location.href = event.currentTarget.dataset['src']
 }
 
-function setInterval(size: number, clb: () => void, delay_ms: number) {
+function setInterval(
+  clb: () => void,
+  intervalTime_ms: number,
+  boundary: number = Number.MAX_SAFE_INTEGER,
+  boundaryCleanup?: () => void
+) {
+  callback()
   let count = 0
-  callback(delay_ms)
-  function callback(delay: number) {
-    // clearInterval(timer)
+  function callback() {
     clb()
-    count = (count + 1) % size
-    timer = window.setTimeout(() => callback(count == 0 ? 0 : delay), 5000)
-    console.log(timer, delay, size, count)
+    if (count == 0) {
+      boundaryCleanup && boundaryCleanup()
+      timer = window.setTimeout(callback, 10)
+    } else {
+      timer = window.setTimeout(callback, intervalTime_ms)
+    }
+    count = (count + 1) % boundary
   }
 }
 
 function clearInterval() {
   window.clearTimeout(timer)
-  // window.clearInterval(timerId)
 }
 
 function Marquee(props: MarqueeProps): JSX.Element {
-  const { contents: _contents, delay_ms, duration_ms: _duration_ms } = props
+  const { contents: _contents, interval_ms, animation_duration_ms: _duration_ms } = props
   const [duration_ms, setDuration_ms] = useState(_duration_ms)
   const [contents] = useState(_contents.concat([_contents[0]]))
-  const [animationArr, setAnimationArr] = useState([0])
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(1)
   const contentRef = useRef()
   useEffect(() => {
-    const arr = new Array(contents.length)
-    arr.fill(0)
-    arr.forEach((v, i) => {
-      arr[i] = 20 * i
-    })
-    setAnimationArr(arr)
-    setIndex(0)
-  }, [_contents])
-
-  useEffect(() => {
-    if (!contentRef.current) return
-    !timer &&
-      setInterval(
-        contents.length,
-        () => {
-          setIndex((i) => {
-            return (i + 1) % contents.length
-          })
-          setDuration_ms((_duration_ms) => (index ? _duration_ms : 0))
-        },
-        delay_ms
-      )
+    if (!contentRef.current || timer) return
+    setInterval(
+      () => {
+        setIndex((i) => {
+          const newInd = (i + 1) % contents.length
+          return newInd
+        })
+        setDuration_ms(_duration_ms)
+      },
+      interval_ms,
+      contents.length,
+      () => {
+        setIndex(0)
+        setDuration_ms(0)
+      }
+    )
     return () => {
       clearInterval()
     }
-  }, [delay_ms, contents, contentRef])
+  }, [interval_ms, contents, contentRef])
   const cont = useMemo(() => WrapArray(contents), [contents])
   return !contents || !contents.length ? null : (
     <div className={localStyle.root}>
@@ -79,7 +79,7 @@ function Marquee(props: MarqueeProps): JSX.Element {
             className={localStyle.marqueeContent}
             id="marquee-con1"
             style={{
-              top: `-${animationArr[index]}px`,
+              top: `-${index * 20}px`,
               transitionDuration: `${duration_ms}ms`,
             }}
           >
@@ -99,7 +99,7 @@ function Marquee(props: MarqueeProps): JSX.Element {
   )
 }
 Marquee.defaultProps = {
-  delay_ms: 3000,
-  duration_ms: 1000,
+  interval_ms: 1000,
+  animation_duration_ms: 300,
 }
 export default Marquee

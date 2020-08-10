@@ -1,5 +1,5 @@
 import React from 'react'
-import BottomLogo from '../views/BottomLogo/index'
+import BottomLogo from '../../views/BottomLogo/index'
 import renderer from 'react-test-renderer'
 import { render, cleanup } from '@testing-library/react'
 

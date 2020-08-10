@@ -2,7 +2,7 @@ import WhiteSpace from '@/components/WhiteSpace'
 import React from 'react'
 import ChinaMap from './ChinaMap'
 import GlobalMap from './GlobalMap'
-import Marquee from './MapBoxTop'
+import Marquee from './Marquee'
 import localStyle from './styles/mapbox.module.css'
 import Tabs, { TabType } from './Tabs'
 
