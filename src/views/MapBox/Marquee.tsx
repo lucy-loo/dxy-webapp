@@ -22,7 +22,8 @@ function setInterval(
   clb: () => void,
   intervalTime_ms: number,
   boundary: number = Number.MAX_SAFE_INTEGER,
-  boundaryCleanup?: () => void
+  boundaryCleanup?: () => void,
+  clearupGap_ms?: number
 ) {
   callback()
   let count = 0
@@ -30,7 +31,7 @@ function setInterval(
     clb()
     if (count == 0) {
       boundaryCleanup && boundaryCleanup()
-      timer = window.setTimeout(callback, 10)
+      timer = window.setTimeout(callback, clearupGap_ms || 300)
     } else {
       timer = window.setTimeout(callback, intervalTime_ms)
     }
@@ -43,8 +44,8 @@ function clearInterval() {
 }
 
 function Marquee(props: MarqueeProps): JSX.Element {
-  const { contents: _contents, interval_ms, animation_duration_ms: _duration_ms } = props
-  const [duration_ms, setDuration_ms] = useState(_duration_ms)
+  const { contents: _contents, interval_ms, animation_duration_ms } = props
+  const [duration_ms, setDuration_ms] = useState(animation_duration_ms)
   const [contents] = useState(_contents.concat([_contents[0]]))
   const [index, setIndex] = useState(1)
   const contentRef = useRef()
@@ -56,14 +57,15 @@ function Marquee(props: MarqueeProps): JSX.Element {
           const newInd = (i + 1) % contents.length
           return newInd
         })
-        setDuration_ms(_duration_ms)
+        setDuration_ms(animation_duration_ms)
       },
       interval_ms,
       contents.length,
       () => {
         setIndex(0)
         setDuration_ms(0)
-      }
+      },
+      animation_duration_ms
     )
     return () => {
       clearInterval()

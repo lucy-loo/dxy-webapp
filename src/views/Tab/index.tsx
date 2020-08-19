@@ -23,11 +23,8 @@ function useRefedContent(
     refMap = new Map(
       eles.map((ele) => {
         const RefedContent = React.forwardRef<HTMLElement>((props, ref2) => {
-          // console.log(ele.tabContent, props)
           const res = React.cloneElement(ele.tabContent, { ...props, ref: ref2 })
-          console.log(res)
           return res
-          // return <div ref={ref2}>{ele.tabContent}</div>;
         })
         contentArr.push(<RefedContent ref={ref} />)
         return [ele.index, ref]

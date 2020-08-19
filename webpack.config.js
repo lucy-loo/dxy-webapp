@@ -5,7 +5,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-
 module.exports = function (env, args) {
   const isDev = args.mode == 'development'
   return {
@@ -13,7 +12,7 @@ module.exports = function (env, args) {
     entry: './src/index.tsx',
     output: {
       filename: '[name].[hash:5].js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'docs'),
       // publicPath: 'https://cdn.example.com/assets/[hash]/',
     },
     // Enable sourcemaps for debugging webpack's output.
@@ -22,6 +21,11 @@ module.exports = function (env, args) {
       // Add '.ts' and '.tsx' as resolvable extensions.
       extensions: ['.js', '.ts', '.tsx', '.css'],
       alias: { '@': path.resolve(__dirname, 'src') },
+    },
+    externals: {
+      React: 'react',
+      ReactDOM: 'react-dom',
+      echarts: 'echarts',
     },
     module: {
       rules: [
@@ -92,7 +96,7 @@ module.exports = function (env, args) {
 
     optimization: {
       splitChunks: {
-        chunks: 'async',
+        chunks: 'all',
         minSize: 30000,
         maxSize: 0,
         minChunks: 1,
