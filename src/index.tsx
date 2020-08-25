@@ -1,6 +1,5 @@
-import React, { useRef, useReducer, useMemo } from 'react'
+import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter } from 'react-router-dom'
 import classNames from 'classnames'
 import globalStyle from '@/styles/index.module.css'
 import Top from './views/Top'
@@ -38,6 +37,7 @@ function App() {
   }, [])
   const [isFixed, setIsFixed] = React.useState(false)
   const [clientHeight, setClientHeight] = React.useState<number>(null)
+
   React.useEffect(() => {
     // didMount
     document.documentElement.clientHeight && setClientHeight(document.documentElement.clientHeight)
@@ -46,41 +46,39 @@ function App() {
 
   return (
     <div className={clsName} style={{ minHeight: clientHeight }}>
-      <HashRouter>
-        <Top ref={topRef} />
-        <Tab<TabIndexEnum>
-          isFixed={isFixed}
-          content={[
-            {
-              index: TabIndexEnum.MAP,
-              tabHead: '疫情地图',
-              tabContent: <MapBox />,
-            },
-            {
-              index: TabIndexEnum.ALERT,
-              tabHead: '实时播报',
-              tabContent: <RealTimeAlert />,
-            },
-            {
-              index: TabIndexEnum.RUMOR,
-              tabHead: '辟谣与防护',
-              tabContent: (
-                <>
-                  <RumorTab />
-                  <RecomendList />
-                </>
-              ),
-            },
-            {
-              index: TabIndexEnum.WIKI,
-              tabHead: '疾病知识',
-              tabContent: <WikiTab />,
-            },
-          ]}
-        />
-        <BottomLogo />
-        <WakeupAspirinApp />
-      </HashRouter>
+      <Top ref={topRef} />
+      <Tab
+        isFixed={isFixed}
+        content={[
+          {
+            index: TabIndexEnum.MAP,
+            tabHead: '疫情地图',
+            tabContent: <MapBox />,
+          },
+          {
+            index: TabIndexEnum.ALERT,
+            tabHead: '实时播报',
+            tabContent: <RealTimeAlert />,
+          },
+          {
+            index: TabIndexEnum.RUMOR,
+            tabHead: '辟谣与防护',
+            tabContent: (
+              <>
+                <RumorTab />
+                <RecomendList />
+              </>
+            ),
+          },
+          {
+            index: TabIndexEnum.WIKI,
+            tabHead: '疾病知识',
+            tabContent: <WikiTab />,
+          },
+        ]}
+      />
+      <BottomLogo />
+      <WakeupAspirinApp />
     </div>
   )
 }
