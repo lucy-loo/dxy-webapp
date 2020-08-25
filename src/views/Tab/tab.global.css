@@ -27,20 +27,25 @@
       span {
         color: #fff;
       }
+      .on {
+        i {
+          background-color: #fff;
+        }
+      }
     }
   }
   .on {
     color: #4169e2;
-  }
-  i.on {
-    background-color: #4169e2;
-    bottom: 0;
-    display: inline-block;
-    height: 0.03rem;
-    left: 0;
-    margin: auto;
-    position: absolute;
-    right: 0;
-    width: 0.5rem;
+    i {
+      background-color: #4169e2;
+      bottom: 0;
+      display: inline-block;
+      height: 0.03rem;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      width: 0.5rem;
+    }
   }
 }

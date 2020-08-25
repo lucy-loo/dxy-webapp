@@ -1,91 +1,67 @@
-/* eslint-disable */
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo } from 'react'
 import * as tabStyle from '@/styles/index.module.css'
 import classNames from 'classnames'
-import WrapArray from '@/utils/array'
-
 interface ContentType {
   index: number
   tabHead: React.ReactNode
-  tabContent: React.ReactElement<any>
+  tabContent: React.ReactElement<unknown>
 }
 
-function useRefedContent(
-  eles: ContentType[],
-  ref: React.MutableRefObject<HTMLElement>
-): [Map<number, React.MutableRefObject<HTMLElement>>, React.ReactElement[]] {
-  const [contentArr, setContentArr] = React.useState<React.ReactElement[]>([])
-  const [refMap, setRefMap] = React.useState<Map<number, React.MutableRefObject<HTMLElement>>>(new Map())
-  React.useEffect(() => {
-    let contentArr = [] as React.ReactElement[],
-      refMap
-
-    refMap = new Map(
-      eles.map((ele) => {
-        const RefedContent = React.forwardRef<HTMLElement>((props, ref2) => {
-          const res = React.cloneElement(ele.tabContent, { ...props, ref: ref2 })
-          return res
-        })
-        contentArr.push(<RefedContent ref={ref} />)
-        return [ele.index, ref]
-      })
-    )
-
-    setContentArr(contentArr)
-    setRefMap(refMap)
-  }, [eles])
-  return [refMap, contentArr]
-}
-
-function Tab<TabIndexEnum>(props: { content: ContentType[]; isFixed?: boolean }): JSX.Element {
+function Tab(props: { content: ContentType[]; isFixed?: boolean }): JSX.Element {
   const { content: propsContent, isFixed } = props
   const tabRef = React.useRef<HTMLDivElement>()
   const [tabHeight, setTabHeight] = React.useState(0)
-  const [currentTab, setCurrentTab] = React.useState<TabIndexEnum>()
-  const [refMap, content] = useRefedContent(propsContent)
+  const [currentTab, setCurrentTab] = React.useState<number>(0)
+
+  const refedContent = useMemo(
+    () =>
+      propsContent.map((c) => {
+        const ref = React.createRef<HTMLDivElement>()
+        const ele = <div ref={ref}>{c.tabContent}</div>
+        return { index: c.index, ref, ele }
+      }),
+    [propsContent]
+  )
   const clsNames = useMemo(() => classNames(tabStyle.inner, { [tabStyle.fixed]: isFixed }), [isFixed])
   React.useEffect(() => {
     tabRef.current && setTabHeight(tabRef.current.clientHeight)
   }, [])
   const handleClickTabHead = React.useCallback(
-    (ref: React.RefObject<HTMLDivElement>, i: TabIndexEnum) => {
-      console.log('clicked', ref)
-
-      if (!ref.current) return
-      const headEle = ref.current
+    (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+      const targetIndex = event.currentTarget.id
+      const ref = refedContent.find((v) => v.index + '' == targetIndex).ref.current
+      const headEle = ref
       window.scrollTo(0, headEle.offsetTop - tabHeight)
-      setCurrentTab(i)
+      setCurrentTab(Number(targetIndex))
     },
-    [tabHeight]
+    [tabHeight, refedContent]
   )
   const res = (
     <>
       <div className={tabStyle.tab} ref={tabRef}>
         <div className={clsNames}>
-          {propsContent.map((v, i) => (
-            <InnerItem
-              key={i}
-              isOn={(currentTab as unknown) === v.index}
-              onClick={handleClickTabHead.bind(this, refMap.get(v.index), v.index)}
-            >
+          {propsContent.map((v) => (
+            <InnerItem key={v.index} id={v.index + ''} isOn={currentTab === v.index} onClick={handleClickTabHead}>
               {v.tabHead}
             </InnerItem>
           ))}
         </div>
       </div>
-      {propsContent && propsContent.map((v, i) => <React.Fragment key={i}>{v.tabContent}</React.Fragment>)}
+      {refedContent && refedContent.map((v) => <React.Fragment key={v.index}>{v.ele}</React.Fragment>)}
     </>
   )
-  console.log(res)
   return res
 }
 
 export default Tab
 
-function InnerItem(props: React.HtmlHTMLAttributes<HTMLSpanElement> & { isOn: boolean }) {
+function InnerItem(
+  props: React.PropsWithChildren<{ id: string; isOn: boolean; onClick: (e: React.MouseEvent<HTMLSpanElement>) => void }>
+) {
+  const { isOn, children, id } = props
   return (
-    <span className={props.isOn ? tabStyle.on : null} onClick={(e) => props.onClick(e)}>
-      {props.children}
+    <span id={id} className={isOn ? tabStyle.on : null} onClick={(e) => props.onClick(e)}>
+      {children}
       <i />
     </span>
   )
