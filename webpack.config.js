@@ -1,5 +1,6 @@
 /* eslint-disable */
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -73,8 +74,12 @@ module.exports = function (env, args) {
       ],
     },
     plugins: [
+      // 告诉 Webpack 使用了哪些动态链接库
+      new webpack.DllReferencePlugin({
+        // 描述 lodash 动态链接库的文件内容
+        manifest: require('./docs/assets/dll/lodash.manifest.json'),
+      }),
       new CopyPlugin({ patterns: [{ from: 'src/assets/json', to: 'assets/json' }] }),
-      new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({ filename: 'assets/css/[name].[hash:5].css' }),
       new HtmlWebpackPlugin({ template: './src/index.html' }),
     ],
