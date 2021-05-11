@@ -92,7 +92,7 @@
     "@babel/runtime": "^7.10.5",
     "classnames": "^2.2.6",
     "echarts": "^4.8.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
